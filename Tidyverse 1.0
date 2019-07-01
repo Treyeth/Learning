@@ -1,0 +1,42 @@
+### Communicating with Data in the Tidyverse 
+https://www.datacamp.com/courses/communicating-with-data-in-the-tidyverse
+
+Chapter 1 
+
+Import -> Tidy -> Transform - Visualize - Model -> Communicate
+
+### Histogram
+
+plot_data <- ilo_data %>%
+              filter(year == 2006)
+ggplot(plot_data) +
+  geom_histogram(
+    aes(x = working_hours))
+
+### Group & summarize
+
+ilo_data %>%
+  group_by(country) %>%
+  summarize(median_working_hours = median(working_hours))
+  
+### Custom ggplot2 themes
+
+### Example 1
+ggplot(plot_data) +
+  geom_histogram(aes(
+    x = working_hours)) +
+  labs(x = "Working hours per week",
+    y = "Number of countries") +
+  theme(
+    text = element_text(
+    family = "Bookman",
+    color = "gray25")
+  )
+### Example 2
+  ggplot(plot_data) +
+    geom_histogram(aes(
+      x = working_hours)) +
+  labs(x = "Working hours per week",
+      y = "Number of countries") +
+  theme_classic()
+  
