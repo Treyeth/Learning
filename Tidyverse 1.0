@@ -38,5 +38,54 @@ ggplot(plot_data) +
       x = working_hours)) +
   labs(x = "Working hours per week",
       y = "Number of countries") +
-  theme_classic()
+  theme_classic() +
+  theme(
+    text = element_text(
+    family = "Bookman",
+    color = "gray25")
+  )
+
+### Example 3
+  ggplot(plot_data) +
+    geom_point(aes(x = working_hours, y = hourly_compensation)) +
+    # Add labels
+    labs(
+      x = "Working hours per week",
+      y = "Hourly compensation",
+      title = "The more people work, the less compensation they seem to receive",
+      subtitle = "Working hours and hourly compensation in European countries, 2006",
+      caption = "Data source: ILO, 2017"
+    )
+
+### theme_minimal(), theme_light()
+
+### Theme configuration options
+axis.title
+  label of axes (element_text; inherits from text)
+axis.title.x
+  x axis label (element_text; inherits from axis.title)
+axis.title.x.top
+  x axis label on top axis (element_text; inherits from axis.title.x)
+axis.title.x.bottom
+  x axis label on bottom axis (element_text; inherits from axis.title.x)
   
+### Example 4
+
+ilo_plot <- ilo_plot +
+  theme_minimal() +
+  # Customize the "minimal" theme with another custom "theme" call
+  theme(
+    text = element_text(family = "Bookman"),
+    title = element_text(color = "gray25"),
+    plot.subtitle = element_text(size = 12),
+    plot.caption = element_text(color = "gray30")
+  )
+  
+### Very nice theme
+
+  ilo_plot +
+    # "theme" calls can be stacked upon each other, so this is already the third call of "theme"
+    theme(
+      plot.background = element_rect(fill = "gray95"),
+      plot.margin = unit(c(5, 10, 5, 10), units = "mm")
+    )
