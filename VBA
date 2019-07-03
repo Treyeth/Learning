@@ -53,7 +53,12 @@ MsgBox Range("C1").Offset(1, -1).Address # returneaza adresa celule sau a rangeu
 Set RangeA = .Range(.Cells(1, 1), .Cells(1, 1).End(xlDown))
 RangeB.Value = RangeC.Value
 RangeC.ClearContents
-### stergere coloana robustness
+
+### Stergere coloana robustness (pe F)
+
+# Varianta 1
 set rosbustness = .Range(.Cells(1, 5), .Cells(5, 1).End(xlDown))
 robustness.ClearContens
+
+# Varianta 2
 RangeA.Cells(1, 1).End(xlDown).EntireRow.Delete
