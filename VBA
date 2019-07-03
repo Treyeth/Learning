@@ -1,3 +1,59 @@
 Training VBA 030719
 
 Limbaj object-oriented
+
+ALT+F11 open VBA tab
+
+Tipuri de variabile
+  Integer
+  Double
+  Long
+  Boolean
+  String
+  Variant: i se poate aloca orice tip de date
+  
+Pentru declarare de variabile Dim nume variabile As tip de date
+
+Dim WB as Workbook
+Dim WS as Worksheet
+Dim R as Range
+
+Set WB = ThisWorkbook
+Set WS = WB.Sheets("Sheet1")
+
+With WB
+  With WS
+    'Code
+  End With
+End With
+
+End Sub
+
+#.Cells se refera la o singura celula
+#.Range se refera la o grupare de celule
+
+Set R = .Cells(1, 1)
+Set R = .Cells(x, y)
+
+Set R = .Range(.Cells(1, 1), .Cells(4,2))
+Set R = .Range("A1:B4")
+Set R = .Range(.Cells(x,y), .Cells(a,b))
+
+.Row si .Column returneaza randul sau coloana unui range
+#e.g. MyRow = R.Row
+     MyCol = R.Column
+     
+Range("A1").Offset(0, 1).Select
+Range("A1").Offset(1, -1).Select
+
+MsgBox Range("C1").Offset(1, -1).Address # returneaza adresa celule sau a rangeului
+
+.End(Direction) (xlUp, xlDown, xlToRight)
+
+Set RangeA = .Range(.Cells(1, 1), .Cells(1, 1).End(xlDown))
+RangeB.Value = RangeC.Value
+RangeC.ClearContents
+### stergere coloana robustness
+set rosbustness = .Range(.Cells(1, 5), .Cells(5, 1).End(xlDown))
+robustness.ClearContens
+RangeA.Cells(1, 1).End(xlDown).EntireRow.Delete
