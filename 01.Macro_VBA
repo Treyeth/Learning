@@ -1,0 +1,44 @@
+Option Explicit
+Sub MyMacro()
+
+Dim WB     As Workbook
+Dim WS     As Worksheet
+Dim RangeA As Range
+Dim RangeB As Range
+Dim x As Long
+'Variabilele RangeA si RangeB corespund coloanelor A si B, excluzand celulele de tip blank
+'Adaugati o noua variabila de tip range
+Dim R As Range
+'Setati variabilele WB si WS
+Set WB = ThisWorkbook
+Set WS = WB.Sheets("Sheet1")
+
+With WB
+    With WS
+        
+        'Setati toate variabilele de tip range
+        Set RangeA = .Range("A1:A44")
+        Set RangeB = .Range("C1:C44")
+        Set R = .Range(.Cells(1, 5), .Cells(44, 5))
+        
+        'Completati codul de mai jos astefel incat sa se afiseze coloana RangeA si coloana RangeB
+        'Msgbox "Value column: " &
+        'Msgbox "Frequency column: " &
+        MsgBox "Value column: " & RangeA.Column
+        MsgBox "Frequency column: " & RangeB.Column
+        'Mutati continutul coloanei Frequency in coloana B
+        Columns("C").Cut
+        Columns("B").Insert Shift:=xlToLeft
+        
+        'Stergeti continutul coloanei Robustness si ulimul rand din tabel, unde valoarea este 0
+        Columns("E").Delete
+         x = .Cells(.Rows.count, 1).End(xlUp).Row
+        .Cells(x, 1).EntireRow.Delete
+    
+    End With
+End With
+            
+End Sub
+
+
+
