@@ -24,9 +24,9 @@ sht.Range(sht.Range("D1"), sht.Range("E1").End(xlDown)).Value = WS3.Range(WS3.Ra
 
 'Rename first 3 columns
 
-sht.[A1].Value = "Name"
-sht.[B1].Value = "ID"
-sht.[C1].Value = "Number"
+sht.[A1].Value = "Category/ Brand"
+sht.[B1].Value = "Value (000) EUR"
+sht.[C1].Value = "Volume (KG)"
 
 '[A1:C1].Value = Split("Name ID Number")
 
