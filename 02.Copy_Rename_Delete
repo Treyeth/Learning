@@ -1,0 +1,40 @@
+Option Explicit
+
+Sub MyMacro()
+
+'Variable definition
+
+Dim WB                As Workbook
+Dim sht, WS2, WS3     As Worksheet
+
+'Set the variables
+
+Set WB = ThisWorkbook
+Set sht = WB.Sheets("Sheet1")
+Set WS2 = WB.Sheets("Sheet2")
+Set WS3 = WB.Sheets("Sheet3")
+
+'Copy column B from Sheet2 to column C in Sheet1
+
+sht.Range(sht.Range("C1"), sht.Range("C1").End(xlDown)).Value = WS2.Range(WS2.Range("B1"), WS2.Range("B1").End(xlDown)).Value
+
+'Copy to Sheet1 the rows from Sheet3
+
+sht.Range(sht.Range("D1"), sht.Range("E1").End(xlDown)).Value = WS3.Range(WS3.Range("B1"), WS3.Range("C1").End(xlDown)).Value
+
+'Rename first 3 columns
+
+sht.[A1].Value = "Name"
+sht.[B1].Value = "ID"
+sht.[C1].Value = "Number"
+
+'[A1:C1].Value = Split("Name ID Number")
+
+'Deleting Sheet2 & Sheet3 from workbook
+
+Application.DisplayAlerts = False
+WS2.Delete
+WS3.Delete
+Application.DisplayAlerts = True
+
+End Sub
