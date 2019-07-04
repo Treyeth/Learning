@@ -1,0 +1,45 @@
+Option Explicit
+Sub MyMacro()
+
+Dim WB     As Workbook
+Dim WS     As Worksheet
+Dim RangeA, RangeC, R As Range
+Dim x As Long
+
+Set WB = ThisWorkbook
+Set WS = WB.Sheets("Sheet1")
+
+With WB
+    With WS
+        
+        'Setting the Range variables
+        'Set RangeA = .Range("A1:A44")
+        
+        Set RangeA = .Range(.Cells(1, 1), .Cells(1, 1).End(xlDown))
+        Set RangeC = .Range(.Cells(1, 3), .Cells(1, 3).End(xlDown))
+        Set R = .Range(.Cells(1, 5), .Cells(1, 5).End(xlDown))
+        
+        'Show the index of column A and B
+        
+        MsgBox "Value column: " & RangeA.Column
+        MsgBox "Frequency column: " & RangeC.Column
+        
+        'Move column Frequency to column B
+        'Columns("C").Cut
+        'Columns("B").Insert Shift:=xlToLeft
+        
+        .Range(.Cells(1, 2), .Cells(1, 2).End(xlDown)) = RangeC.Value
+        RangeC.ClearContents
+           
+        'Delete column Robustness and the last row in the worksheet, where the value is 0
+        'Columns("E").Delete
+        'x = .Cells(.Rows.count, 1).End(xlUp).Row
+        '.Cells(x, 1).EntireRow.Delete
+        
+        R.ClearContents
+        RangeA.Cells(1, 1).End(xlDown).EntireRow.Delete
+        
+    End With
+End With
+            
+End Sub
