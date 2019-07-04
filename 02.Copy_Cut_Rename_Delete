@@ -3,8 +3,9 @@ Option Explicit
 Sub MyMacro()
 
 'Variable definition
-Dim WB                    As Workbook
-Dim sht, WS, WS1, WS2     As Worksheet
+
+Dim WB               As Workbook
+Dim sht, WS, WS2     As Worksheet
 
 'Set the variables
 
