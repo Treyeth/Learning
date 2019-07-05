@@ -48,3 +48,26 @@ head -n 5 seasonal/winter.csv
 # -n specify the number of lines
 # ls -R (recursive) shows every file and directory in the current level then everything in each sub-directory
 # -F prints a / after the name of every directory and a * after the name of every runnable program
+# man tail - shows help for the function tail
+tail -n +7 # displays all but the first six lines of seasonal/spring.csv
+cut -f 2-5,8 -d , values.csv # select columns 2 through 5 and columns 8 using comma as the separator
+# -f means fields
+# -d means delimiter
+# history will print a list of commands you have run recently
+# !55 re-run the 55th command in your history
+# re-run a command by typing ! followed by the command
+!head
+!cut
+# grep can search for patterns as well
+# -c: print a count of matching lines rather than the lines themselves
+# -h: do not print the names of files when searching multiple files
+# -i: ignore case (e.g., treat "Regression" and "regression" as matches)
+# -l: print the names of files that contain matches, not the matches
+# -n: print line numbers for matching lines
+# -v: invert the match, i.e., only show lines that don't match
+grep molar seasonal/autumn.csv
+grep -v molar seasonal/autumn.csv
+grep -v -n molar seasonal/spring.csv
+grep -c incisor seasonal/autumn.csv seasonal/winter.csv
+# paste - combine two files
+paste seasonal/autumn.csv seasonal/winter.csv
