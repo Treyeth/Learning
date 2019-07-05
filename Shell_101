@@ -1,0 +1,27 @@
+Introduction to Shell for Data Science - https://campus.datacamp.com/courses/introduction-to-shell-for-data-science
+
+Commands
+
+# pwd - print working directory
+# ls  - lists the contents of your current directory (the one displayed by pwd)
+# we can call ls /home/repl showing what's in the starting directory
+ls /home/repl/seasonal
+# Relative Path style (if we are already in /home/repl)
+ls course.txt
+ls seasonal/summer.csv
+ls people
+# Basically you don't need to specify the whole path if you're already in there
+# cd - change directory
+cd seasonal
+# ls ~ will always list the contents of your home directory
+# cd ~ will always take you home
+# ls and ls. do the same thing
+# cd .. will move you to the directory above
+# cd ~/../.  - the path means 'home directory', 'up a level', 'here'.
+# cp - copy file
+cp seasonal/summer.csv backup/summer.bck
+cp seasonal/spring.csv seasonal/summer.csv backup # copy them to the backup folder
+# mv - moves the file from one directory to another
+mv autumn.csv winter.csv ..
+mv seasonal/spring.csv seasonal/summer.csv backup
+mv winter.csv winter.csv.bck # rename the file..
