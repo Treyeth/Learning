@@ -25,3 +25,26 @@ cp seasonal/spring.csv seasonal/summer.csv backup # copy them to the backup fold
 mv autumn.csv winter.csv ..
 mv seasonal/spring.csv seasonal/summer.csv backup
 mv winter.csv winter.csv.bck # rename the file..
+# rm - remove the file/files
+rm thesis.txt backup/thesis-2017-08.txt
+rm autumn.csv
+rm seasonal/summer.csv
+# rmdir - delete the directory when it's empty
+# mkdir - create directory
+rmdir people
+mkdir yearly
+mkdir yearly/2017
+cd /tmp # go to the temporary folder
+mv ~/people/agarwal.txt scratch
+# cat - prints the contents of file onto the screen
+cat course.txt
+# less - view large files by pieces
+less seasonal/spring.csv seasonal/summer.csv
+# space to pagedown, :n to go to the second file and :q to quit
+# head - prints the first 10 lines of the file
+head people/agarwal.txt
+# Tab for autocompletion! 
+head -n 5 seasonal/winter.csv
+# -n specify the number of lines
+# ls -R (recursive) shows every file and directory in the current level then everything in each sub-directory
+# -F prints a / after the name of every directory and a * after the name of every runnable program
