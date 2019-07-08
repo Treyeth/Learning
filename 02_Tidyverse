@@ -1,0 +1,58 @@
+Categorical Data in the Tidyverse https://campus.datacamp.com/courses/categorical-data-in-the-tidyverse
+
+ 
+# Get the number of categories (levels)
+nlevels(multipleChoiceResponses$LearningDataScienceTime)
+
+# Get the list of categories (levels)
+levels(multipleChoiceResponses$LearningDataScienceTime)
+
+# Get number of levels for every factor variable
+multipleChoiceResponses %>%
+  summarise_if(is.factor, nlevels)
+
+# Change all the character columns to factors
+responses_as_factors <- multiple_choice_responses %>%
+    mutate_if(is.character, as.factor)
+
+number_of_levels <- responses_as_factors %>%
+	# apply the function nlevels to each column
+    summarise_all(nlevels) %>%
+    # change the dataset from wide to long
+    gather(variable, num_levels)
+
+# top_n(x, var) gets us the first x rows of a dataset based on the value of var. 
+# pull() allows us to extract a column and take out the name, leaving only the value(s) from the column.
+
+# Select the 3 rows with the highest number of levels
+number_of_levels %>%
+    top_n(3, num_levels)
+    
+number_of_levels %>%
+	# filter for where variable is CurrentJobTitleSelect
+    filter(variable == "CurrentJobTitleSelect") %>%
+	# pull num_levels
+    pull(num_levels)
+    
+mtcars %>%
+  top_n(2, mpg) %>%
+  pull(mpg)
+  
+ggplot(multiple_choice_responses) +
+    # order highest to lowest
+    geom_bar(aes(x = fct_rev(fct_infreq(EmployerIndustry)))) + 
+    # flip the coordinates
+    coord_flip()
+    
+multiple_choice_responses %>%
+  # remove NAs
+  filter(!is.na(EmployerIndustry) & !is.na(Age)) %>%
+  # get mean_age by EmployerIndustry
+  group_by(EmployerIndustry) %>%
+  summarise(mean_age = mean(Age)) %>%
+  # reorder EmployerIndustry by mean_age 
+  mutate(EmployerIndustry = fct_reorder(EmployerIndustry, mean_age)) %>%
+  # make a scatterplot of EmployerIndustry by mean_age
+  ggplot(aes(x = EmployerIndustry, y = mean_age)) + 
+    geom_point() + 
+    coord_flip()
