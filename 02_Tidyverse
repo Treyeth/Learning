@@ -162,3 +162,97 @@ usefulness_by_platform %>%
     theme(axis.text.x = element_text(angle = 90, hjust = 1)) + 
     labs(x = "Learning Platform", y = "Percent finding at least somewhat useful") + 
     scale_y_continuous(labels = scales::percent)
+
+multiple_choice_responses %>%
+    # Filter for rows where Age is between 10 and 90
+    filter(between(Age, 10, 90)) %>%
+    # Create the generation variable based on age
+    mutate(generation = case_when(
+    between(Age, 10, 22) ~ "Gen Z", 
+    between(Age, 23, 37) ~ "Gen Y", 
+    between(Age, 38, 52) ~ "Gen X", 
+    between(Age, 53, 71) ~ "Baby Boomer", 
+    between(Age, 72, 90) ~ "Silent"
+    )) %>%
+    # Get a count of how many answers in each generation
+    count(generation)
+    
+multiple_choice_responses %>%
+    # Filter out people who selected Data Scientist as their Job Title
+    filter(CurrentJobTitleSelect != "Data Scientist") %>%
+    # Create a new variable, job_identity
+    mutate(job_identity = case_when(
+        CurrentJobTitleSelect == "Data Analyst" & 
+        DataScienceIdentitySelect == "Yes" ~ "DS analysts", 
+        CurrentJobTitleSelect == "Data Analyst" & 
+        DataScienceIdentitySelect %in% c("No", "Sort of (Explain more)") ~ "NDS analyst", 
+        CurrentJobTitleSelect != "Data Analyst" & 
+        DataScienceIdentitySelect == "Yes" ~ "DS non-analysts", 
+        TRUE ~ "NDS non analysts")) %>%
+    # Get the average job satisfaction by job_identity, removing NAs
+    group_by(job_identity) %>%
+    summarize(avg_js = mean(JobSatisfaction, na.rm = TRUE))
+    
+gathered_data <- flying_etiquette %>%
+    mutate_if(is.character, as.factor) %>%
+    filter(`How often do you travel by plane?` != "Never") %>%
+    # Select columns containing "rude"
+    select(contains("rude")) %>%
+    # Change format from wide to long
+    gather(response_var, value)
+    
+gathered_data %>%
+    # Remove everything before and including "rude to "
+    mutate(response_var = str_remove(response_var, '.*rude to ')) %>%
+    # Remove "on a plane"
+    mutate(response_var = str_remove(response_var, 'on a plane'))
+    
+dichotimized_data <- gathered_data %>%
+    mutate(response_var = str_replace(response_var, '.*rude to ', '')) %>%
+    mutate(response_var = str_replace(response_var, 'on a plane', '')) %>%
+	# Remove rows that are NA in the value column
+	filter(!is.na(value)) %>%
+    # Dichotomize the value variable to make a new variable, rude
+    mutate(rude = if_else(value %in% c('No, not rude at all', 'No, not at all rude'), 0, 1))
+    
+ rude_behaviors <- gathered_data %>%
+    mutate(response_var = str_replace(response_var, '.*rude to ', '')) %>%
+    mutate(response_var = str_replace(response_var, 'on a plane', '')) %>%
+	# Remove rows that are NA in the value column
+	filter(!is.na(value)) %>%
+    mutate(rude = if_else(value %in% c("No, not rude at all", "No, not at all rude"), 0, 1)) %>%
+    # Create perc_rude, the percent considering each behavior rude
+    group_by(response_var) %>%
+    summarise(perc_rude = mean(rude))
+
+initial_plot <- rude_behaviors %>%
+	# reorder response_var by perc_rude
+	mutate(response_var = fct_reorder(response_var, perc_rude)) %>%
+	# make a bar plot of perc_rude by response_var
+	ggplot(aes(x = response_var, y = perc_rude)) + 
+    geom_col() 
+
+titled_plot <- initial_plot + 
+    # Add the title, subtitle, and caption
+    labs(title = "Hell Is Other People In A Pressurized Metal Tube",
+         subtitle = "Percentage of 874 air-passenger respondents who said action is very or somewhat rude",
+         caption = "Source: SurveyMonkey Audience",
+         x = "",
+         y = "",
+         # Remove the x- and y-axis labels
+         axis.text.x = element_blank(), 
+         axis.text.y = element_blank()) 
+
+flipped_plot <- titled_plot + 
+    # Flip the axes
+    coord_flip() + 
+    # Remove the x-axis ticks and labels
+    theme(axis.ticks.x = element_blank(), 
+        axis.text.x = element_blank())
+	
+flipped_plot + 
+    # Add labels above the bar with the perc value
+    geom_text(aes(label = percent(perc_rude), 
+                  y = perc_rude + .03), 
+              position = position_dodge(0.9),
+              vjust = 1)
