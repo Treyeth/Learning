@@ -329,3 +329,59 @@ while offset != 0:
     print("correcting...")
     offset = offset - 1
     print(offset)
+
+# Initialize offset
+offset = -6
+
+# Code the while loop
+while offset != 0 :
+    print("correcting...")
+    if offset > 0 :
+      offset = offset -1
+
+    else : 
+      offset = offset + 1    
+    print(offset)
+    
+# areas list
+areas = [11.25, 18.0, 20.0, 10.75, 9.50]
+
+# Code the for loop
+for i in areas:
+    print(i)
+    
+# areas list
+areas = [11.25, 18.0, 20.0, 10.75, 9.50]
+
+# Change for loop to use enumerate() and update print()
+for index, a in enumerate(areas):
+    print("room " + str(index) + ": " + str(a))
+    
+# house list of lists
+house = [["hallway", 11.25], 
+         ["kitchen", 18.0], 
+         ["living room", 20.0], 
+         ["bedroom", 10.75], 
+         ["bathroom", 9.50]]
+         
+# Build a for loop from scratch
+for i in house:
+    print("the " + str(i[0]) + " is " + str(i[1]) + " sqm")
+# Definition of dictionary
+europe = {'spain':'madrid', 'france':'paris', 'germany':'berlin',
+          'norway':'oslo', 'italy':'rome', 'poland':'warsaw', 'austria':'vienna' }
+          
+# Iterate over europe
+for x, y in europe.items():
+    print("the capital of " + str(x) + " is " + str(y))  
+    
+# Import numpy as np
+import numpy as np
+
+# For loop over np_height
+for x in np_height :
+    print(str(x) + " inches")
+
+# For loop over np_baseball (2D numpy arrays)
+for x in np.nditer(np_baseball) :
+    print(x)
