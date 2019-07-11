@@ -1,0 +1,34 @@
+Option Explicit
+Sub my_programel()
+
+Dim WB As Workbook
+Dim sht As Worksheet
+Dim WS As Worksheet
+Dim R As Range
+Dim ColumnBHeader As Range
+Dim cell As Range
+
+Set WB = ThisWorkbook
+Set sht = WB.Sheets("Sheet1")
+Set WS = WB.Sheets("Sheet2")
+
+Set ColumnBHeader = sht.Rows("1:1").Find(What:="1. Quartal 2017", LookIn:=xlValues)
+Set R = sht.Range(sht.Cells(2, 2), sht.Cells(2, 4).End(xlDown))
+Set R = sht.Range(ColumnBHeader.Offset(1, 0), ColumnBHeader.Offset(1, 0).End(xlDown).End(xlToRight))
+For Each cell In R
+    If (cell.Value = "") Then
+        cell.Value = "Not Found"
+    End If
+Next cell
+    
+For Each cell In R
+    If (cell.Value < 30) Then
+        cell.Interior.Color = 65535
+    ElseIf (cell.Value > 30 And cell.Value < 50) Then
+        cell.Interior.Color = 0
+    ElseIf (cell.Value > 50) Then
+        cell.Interior.Color = 5324324
+    End If
+Next cell
+    
+End Sub
