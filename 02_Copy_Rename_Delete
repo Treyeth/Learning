@@ -21,6 +21,7 @@ sht.Range(sht.Range("C1"), sht.Range("C1").End(xlDown)).Value = WS2.Range(WS2.Ra
 'Copy to Sheet1 the rows from Sheet3
 
 sht.Range(sht.Range("D1"), sht.Range("E1").End(xlDown)).Value = WS3.Range(WS3.Range("B1"), WS3.Range("C1").End(xlDown)).Value
+sht.Range(sht.Range("A52"), sht.Range("E52").End(xlDown)).EntireRow.Delete
 
 'Rename first 3 columns
 
@@ -38,3 +39,4 @@ WS3.Delete
 Application.DisplayAlerts = True
 
 End Sub
+
