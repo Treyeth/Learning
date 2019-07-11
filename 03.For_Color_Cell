@@ -1,0 +1,58 @@
+Option Explicit
+Sub my_activity()
+
+Dim WB As Workbook
+Dim WS As Worksheet
+Dim cell As Range
+
+Set WB = ThisWorkbook
+Set WS = WB.Sheets("Sheet1")
+
+With WB
+    With WS
+        Dim TableCorner As Range
+        Dim R As Range
+        
+        Set TableCorner = WS.Rows("1:1").Find(What:="Category / Period", LookIn:=xlValues)
+        'TableCorner.Select
+        Set R = .Range(TableCorner.Offset(1, 1), TableCorner.Offset(1, 1).End(xlDown).End(xlToRight))
+        
+        For Each cell In R
+            If Not cell.Value = "*" Then
+                If (cell.Value < 30) Then
+                    cell.Interior.Color = 65535
+                ElseIf (cell.Value > 30 And cell.Value < 50) Then
+                    cell.Interior.Color = 49407
+                ElseIf (cell.Value > 50) Then
+                    cell.Interior.Color = 5296274
+                Else
+                    cell.Interior.Color = 0
+                    cell.Font.Color = 65535
+                End If
+            End If
+        Next cell
+        
+        Set R = .Range(TableCorner.Offset(1, 0), TableCorner.Offset(1, 0).End(xlDown))
+        'R.Select
+        For Each cell In R
+            cell.Value = Trim(cell.Value)
+        Next cell
+        
+        Dim R2 As Range
+        Set R2 = WB.Worksheets("Sheet2").Range(WB.Worksheets("Sheet2").Cells(2, 1), WB.Worksheets("Sheet2").Cells(2, 1).End(xlDown))
+        Dim cell2 As Range
+        
+        For Each cell In R
+            For Each cell2 In R2
+                If cell.Value = cell2.Value Then
+                    cell.Value = cell2.Offset(0, 1).Value
+                    Exit For
+                End If
+            Next cell2
+        Next cell
+            
+    End With
+End With
+
+End Sub
+
