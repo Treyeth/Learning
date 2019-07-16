@@ -4,31 +4,51 @@ Sub my_programel()
 Dim WB As Workbook
 Dim sht As Worksheet
 Dim WS As Worksheet
-Dim R As Range
-Dim ColumnBHeader As Range
-Dim cell As Range
+Dim R, R2, RSheet2 As Range
+Dim ColumnBHeader, ColumnBHeaderSheet2 As Range
+Dim cell, cell2 As Range
 
 Set WB = ThisWorkbook
 Set sht = WB.Sheets("Sheet1")
 Set WS = WB.Sheets("Sheet2")
 
-Set ColumnBHeader = sht.Rows("1:1").Find(What:="1. Quartal 2017", LookIn:=xlValues)
-Set R = sht.Range(sht.Cells(2, 2), sht.Cells(2, 4).End(xlDown))
-Set R = sht.Range(ColumnBHeader.Offset(1, 0), ColumnBHeader.Offset(1, 0).End(xlDown).End(xlToRight))
+Set ColumnBHeader = sht.Rows("1:1").Find(What:="MAT Q1 2017", LookIn:=xlValues)
+Set ColumnBHeaderSheet2 = WS.Rows("1:1").Find(What:="1. Quartal 2017", LookIn:=xlValues)
+Set R = sht.Range(ColumnBHeader.Offset(0, -1), ColumnBHeader.Offset(0, -1).End(xlDown).End(xlToRight))
+Set RSheet2 = WS.Range(ColumnBHeaderSheet2.Offset(0, -1), ColumnBHeaderSheet2.Offset(0, -1).End(xlDown).End(xlToRight))
+
 For Each cell In R
-    If (cell.Value = "") Then
-        cell.Value = "Not Found"
-    End If
-Next cell
-    
-For Each cell In R
-    If (cell.Value < 30) Then
-        cell.Interior.Color = 65535
-    ElseIf (cell.Value > 30 And cell.Value < 50) Then
-        cell.Interior.Color = 0
-    ElseIf (cell.Value > 50) Then
-        cell.Interior.Color = 5324324
-    End If
+    For Each cell2 In RSheet2
+        If (cell.Value = "") Then
+            cell.Value = "Not Found"
+            cell2.Value = "Not Found"
+        ElseIf (IsNumeric(cell) = True And cell.Value < 30) Then
+            cell.Interior.Color = 255
+        ElseIf (IsNumeric(cell2) = True And cell2.Value < 30) Then
+            cell2.Interior.Color = 255
+        ElseIf (IsNumeric(cell2) = True And cell2.Value > 30 And cell2.Value < 50) Then
+            cell2.Interior.Color = 0
+        ElseIf (IsNumeric(cell2) = True And cell2.Value > 50) Then
+            cell2.Interior.Color = 5287936
+        ElseIf (IsNumeric(cell) = True And cell.Value > 30 And cell.Value < 50) Then
+            cell.Interior.Color = 0
+        ElseIf (IsNumeric(cell) = True And cell.Value > 50) Then
+            cell.Interior.Color = 5287936
+        ElseIf cell.Value = 50 Or cell.Value = 30 Then
+            cell.Interior.Color = 0
+            cell.Font.Color = 65535
+        ElseIf cell2.Value = 50 Or cell2.Value = 30 Then
+            cell2.Interior.Color = 0
+            cell2.Font.Color = 65535
+        Else
+            cell.Value = Trim(cell.Value)
+            cell2.Value = Trim(cell2.Value)
+        End If
+    Next cell2
 Next cell
     
 End Sub
+
+
+
+
