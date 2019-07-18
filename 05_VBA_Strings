@@ -1,0 +1,42 @@
+'Mine
+Option Explicit
+Sub SeparateStrings()
+
+Dim wb As Workbook
+Dim sht As Worksheet
+Dim cell, R, ColumnHeader As Range
+
+Set wb = ThisWorkbook
+Set sht = wb.Sheets("Sheet1")
+
+Set ColumnHeader = sht.Rows("1:1").Find(What:="Full Name", LookIn:=xlValues)
+Set R = sht.Range(ColumnHeader.Offset(1, 0), ColumnHeader.Offset(1, 0).End(xlDown))
+
+For Each cell In R
+    cell.Offset(0, 2).Value = Left(cell.Value, InStr(cell.Value, ",") - 1)
+    cell.Offset(0, 1).Value = Mid(cell.Value, InStr(cell.Value, ",") + 2)
+Next cell
+End Sub
+
+Option Explicit
+Sub SeparateStrings()
+
+Dim wb As Workbook
+Dim ws As Worksheet
+Dim FullName As Range
+Dim CommaPosition As Integer
+
+Set wb = ThisWorkbook
+Set ws = wb.Sheets("Sheet1")
+
+With ws
+For Each FullName In .Range(.Cells(2, 1), .Cells(2, 1).End(xlDown))
+
+    CommaPosition = InStr(FullName.Value, ",")
+    FullName.Offset(0, 2).Value = Left(FullName.Value, CommaPosition - 1)
+    FullName.Offset(0, 1).Value = Mid(FullName.Value, CommaPosition + 2)
+    
+Next FullName
+End With
+End Sub
+
