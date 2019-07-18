@@ -21,6 +21,7 @@ For Each cell In R
     For Each cell2 In RSheet2
         If (cell.Value = "") Then
             cell.Value = "Not Found"
+        ElseIf (cell2.Value = "") Then
             cell2.Value = "Not Found"
         ElseIf (IsNumeric(cell) = True And cell.Value < 30) Then
             cell.Interior.Color = 255
@@ -48,7 +49,3 @@ For Each cell In R
 Next cell
     
 End Sub
-
-
-
-
