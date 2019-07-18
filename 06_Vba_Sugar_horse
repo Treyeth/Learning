@@ -1,0 +1,27 @@
+Sub HORSE_SUGAR_CUBES()
+
+'Tabelul se completeaza zilnic de catre ingrijitori.
+'In cazul in care un ingrijitor completeaza cu 0 sau ofera mai mult de doua cuburi de zahar unui cal, va aparea un mesaj pe ecran.
+
+Dim ws As Worksheet
+Dim caretakerNumber As String
+Dim sugarCubes As Range
+
+With ws
+
+    For Each sugarCubes In Range("F7:F11")
+    
+        sugarCubes.Value = InputBox("Number of sugar cubes given to horse by caretaker " & caretakerNumber)
+        While sugarCubes.Value < 1 Or sugarCubes.Value > 2
+            MsgBox "Value should be between 1 and 2"
+            sugarCubes.Value = ""
+            sugarCubes.Value = InputBox("Number of sugar cubes given to horse by caretaker " & caretakerNumber)
+            
+        Wend
+        caretakerNumber = caretakerNumber
+    
+    Next sugarCubes
+    
+End With
+
+End Sub
