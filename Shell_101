@@ -71,3 +71,23 @@ grep -v -n molar seasonal/spring.csv
 grep -c incisor seasonal/autumn.csv seasonal/winter.csv
 # paste - combine two files
 paste seasonal/autumn.csv seasonal/winter.csv
+set | grep HISTFILESIZE
+echo hello DataCamp!
+echo $USER # getting variable value 
+training=seasonal/summer.csv # assigning to a variable
+for filetype in gif jpg png; do echo $filetype; done
+for filename in seasonal/*.csv; do echo $filename; done
+files=seasonal/*.csv
+for f in $files; do echo $f; done
+for file in seasonal/*.csv; do head -n 2 $file | tail -n 1; done
+grep -h -v Tooth spring.csv summer.csv > temp.csv
+history | tail -n 3 > steps.txt
+bash dates.sh
+cat teeth.out
+A script that processes specific files is useful as a record of what you did, but one that allows you to process any files you want 
+is more useful. To support this, you can use the special expression $@ (dollar sign immediately followed by at-sign) to mean "all of 
+the command-line parameters given to the script". For example, if unique-lines.sh contains this:
+sort $@ | uniq
+bash unique-lines.sh seasonal/summer.csv
+the shell replaces $@ with seasonal/summer.csv and processes one file. If you run this:
+bash unique-lines.sh seasonal/summer.csv seasonal/autumn.csv
